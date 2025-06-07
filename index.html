@@ -1,107 +1,136 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-
-export default function StreifenblattForm() {
-  const [form, setForm] = useState({
-    datum: "",
-    dienstzeit: "",
-    fuStw: "",
-    beamte: "",
-    ort: "",
-    uhrzeit: "",
-    beschreibung: "",
-    massnahmen: [],
-    weitereSchritte: "",
-  });
-
-  const massnahmenOptionen = [
-    "Personen-/Fahrzeugkontrolle",
-    "Ruhestörung",
-    "Verkehrsunfall",
-    "Ladendiebstahl",
-    "Sachbeschädigung",
-    "Hausfriedensbruch",
-    "Drogendelikte",
-    "Verdächtige Person",
-    "Verkehrskontrolle",
-    "Widerstand gegen Vollstreckungsbeamte",
-    "Diebstahl",
-    "Körperverletzung",
-    "Vandalismus",
-    "Platzverweis",
-    "Gefährliche Körperverletzung",
-    "Unfallflucht",
-    "Illegale Versammlung"
-  ];
-
-  const handleSubmit = async () => {
-    const payload = {
-      content: `**📋 Streifenbericht eingereicht**\n\n` +
-        `**Datum:** ${form.datum}\n` +
-        `**Dienstzeit:** ${form.dienstzeit}\n` +
-        `**Funkstreifenwagen:** ${form.fuStw}\n` +
-        `**Beamte:** ${form.beamte}\n` +
-        `**Ort:** ${form.ort} um ${form.uhrzeit} Uhr\n` +
-        `**Vorkommnisse:** ${form.massnahmen.join(", ")}\n` +
-        `**Beschreibung:** ${form.beschreibung}\n` +
-        `**Weitere Schritte:** ${form.weitereSchritte}`
-    };
-
-    await fetch("https://discord.com/api/webhooks/1380961960748650536/N1HrBy_bBZXTWy5IdZ8kmAIlKwdHiaeDOfe3vL9NO6fGfmY3NpRXdHd8Nf0Vn4aKCTzT", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    });
-    alert("Bericht erfolgreich eingereicht!");
-  };
-
-  return (
-    <div className="max-w-2xl mx-auto p-6 bg-white rounded-2xl shadow-xl border border-gray-300">
-      <h1 className="text-2xl font-bold mb-4 text-center text-blue-900">Polizei Niedersachsen – Streifenblatt</h1>
-      <div className="grid gap-4">
-        <Input placeholder="Datum" onChange={e => setForm({ ...form, datum: e.target.value })} />
-        <Input placeholder="Dienstzeit (z. B. 06:00–14:00)" onChange={e => setForm({ ...form, dienstzeit: e.target.value })} />
-        <Input placeholder="Funkstreifenwagen (z. B. FuStw 12-1)" onChange={e => setForm({ ...form, fuStw: e.target.value })} />
-        <Input placeholder="Beamte im Dienst (z. B. PHM Meier / PK Schulz)" onChange={e => setForm({ ...form, beamte: e.target.value })} />
-        <Input placeholder="Einsatzort" onChange={e => setForm({ ...form, ort: e.target.value })} />
-        <Input placeholder="Uhrzeit vor Ort (z. B. 08:15)" onChange={e => setForm({ ...form, uhrzeit: e.target.value })} />
-
-        <Label className="font-semibold">Vorkommnisse</Label>
-        <div className="grid grid-cols-2 gap-2">
-          {massnahmenOptionen.map(opt => (
-            <label key={opt} className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                value={opt}
-                onChange={e => {
-                  const checked = e.target.checked;
-                  setForm({
-                    ...form,
-                    massnahmen: checked
-                      ? [...form.massnahmen, opt]
-                      : form.massnahmen.filter(o => o !== opt),
-                  });
-                }}
-              />
-              {opt}
-            </label>
-          ))}
-        </div>
-
-        <Textarea placeholder="Beschreibung des Einsatzes" rows={5} onChange={e => setForm({ ...form, beschreibung: e.target.value })} />
-        <Textarea placeholder="Weitere Schritte oder Hinweise" rows={3} onChange={e => setForm({ ...form, weitereSchritte: e.target.value })} />
-
-        <Button onClick={handleSubmit} className="bg-blue-900 text-white w-full hover:bg-blue-800">
-          Bericht erstellen und einreichen
-        </Button>
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Polizei Niedersachsen – Streifenblatt</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #e8edf2;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #003366;
+      text-align: center;
+    }
+    input, textarea, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      margin-bottom: 16px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    label {
+      font-weight: bold;
+    }
+    .checkboxes {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    button {
+      width: 100%;
+      background-color: #003366;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #002244;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Streifenblatt – Polizei Niedersachsen</h1>
+    <form id="streifenForm">
+      <label>Datum:</label>
+      <input type="date" name="datum" required />
+      
+      <label>Dienstzeit:</label>
+      <input type="text" name="dienstzeit" placeholder="z. B. 06:00–14:00" required />
+      
+      <label>Funkstreifenwagen:</label>
+      <input type="text" name="fuStw" placeholder="z. B. FuStw 12-1" required />
+      
+      <label>Beamte:</label>
+      <input type="text" name="beamte" placeholder="z. B. PHM Meier / PK Schulz" required />
+      
+      <label>Ort:</label>
+      <input type="text" name="ort" required />
+      
+      <label>Uhrzeit:</label>
+      <input type="time" name="uhrzeit" required />
+      
+      <label>Vorkommnisse:</label>
+      <div class="checkboxes">
+        <label><input type="checkbox" name="massnahmen" value="Personen-/Fahrzeugkontrolle" /> Personen-/Fahrzeugkontrolle</label>
+        <label><input type="checkbox" name="massnahmen" value="Ruhestörung" /> Ruhestörung</label>
+        <label><input type="checkbox" name="massnahmen" value="Verkehrsunfall" /> Verkehrsunfall</label>
+        <label><input type="checkbox" name="massnahmen" value="Ladendiebstahl" /> Ladendiebstahl</label>
+        <label><input type="checkbox" name="massnahmen" value="Sachbeschädigung" /> Sachbeschädigung</label>
+        <label><input type="checkbox" name="massnahmen" value="Hausfriedensbruch" /> Hausfriedensbruch</label>
+        <label><input type="checkbox" name="massnahmen" value="Drogendelikte" /> Drogendelikte</label>
+        <label><input type="checkbox" name="massnahmen" value="Verdächtige Person" /> Verdächtige Person</label>
+        <label><input type="checkbox" name="massnahmen" value="Widerstand gegen Vollstreckungsbeamte" /> Widerstand gegen Vollstreckungsbeamte</label>
+        <label><input type="checkbox" name="massnahmen" value="Platzverweis" /> Platzverweis</label>
       </div>
-    </div>
-  );
-}
+
+      <label>Beschreibung:</label>
+      <textarea name="beschreibung" rows="5" placeholder="Einsatzbeschreibung..." required></textarea>
+
+      <label>Weitere Schritte / Hinweise:</label>
+      <textarea name="weitere" rows="3"></textarea>
+
+      <button type="submit">Bericht erstellen und einreichen</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("streifenForm").addEventListener("submit", async function(event) {
+      event.preventDefault();
+
+      const form = new FormData(event.target);
+      const massnahmen = [];
+      document.querySelectorAll("input[name='massnahmen']:checked").forEach(cb => massnahmen.push(cb.value));
+
+      const message = `**📋 Streifenbericht eingereicht**\n\n` +
+        `**📅 Datum:** ${form.get("datum")}\n` +
+        `**⏰ Dienstzeit:** ${form.get("dienstzeit")}\n` +
+        `**🚓 Funkstreifenwagen:** ${form.get("fuStw")}\n` +
+        `**👮 Beamte:** ${form.get("beamte")}\n` +
+        `**📍 Ort:** ${form.get("ort")} um ${form.get("uhrzeit")} Uhr\n` +
+        `**📑 Vorkommnisse:** ${massnahmen.join(", ")}\n\n` +
+        `**📝 Beschreibung:** ${form.get("beschreibung")}\n` +
+        `**🔄 Weitere Schritte:** ${form.get("weitere")}`;
+
+      await fetch("https://discord.com/api/webhooks/1380961960748650536/N1HrBy_bBZXTWy5IdZ8kmAIlKwdHiaeDOfe3vL9NO6fGfmY3NpRXdHd8Nf0Vn4aKCTzT", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ content: message })
+      });
+
+      alert("✅ Bericht erfolgreich eingereicht!");
+      event.target.reset();
+    });
+  </script>
+</body>
+</html>
+
