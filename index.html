@@ -2,135 +2,131 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Polizei Niedersachsen – Streifenblatt</title>
   <style>
     body {
-      font-family: sans-serif;
-      background-color: #e8edf2;
+      font-family: Arial, sans-serif;
+      background-color: #f1f3f4;
       margin: 0;
-      padding: 0;
-    }
-    .container {
-      max-width: 800px;
-      margin: 40px auto;
-      background: white;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      padding: 2rem;
     }
     h1 {
-      color: #003366;
       text-align: center;
+      color: #003366;
+    }
+    form {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      max-width: 800px;
+      margin: auto;
+    }
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: bold;
     }
     input, textarea, select {
       width: 100%;
-      padding: 10px;
-      margin-top: 6px;
-      margin-bottom: 16px;
+      padding: 0.5rem;
+      margin-top: 0.25rem;
       border: 1px solid #ccc;
-      border-radius: 6px;
+      border-radius: 5px;
     }
-    label {
-      font-weight: bold;
-    }
-    .checkboxes {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-      margin-bottom: 20px;
+    .checkboxes label {
+      font-weight: normal;
     }
     button {
-      width: 100%;
+      margin-top: 2rem;
+      padding: 0.75rem 2rem;
       background-color: #003366;
       color: white;
-      padding: 12px;
       border: none;
-      border-radius: 6px;
-      font-size: 16px;
+      border-radius: 5px;
       cursor: pointer;
     }
     button:hover {
-      background-color: #002244;
+      background-color: #0055aa;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Streifenblatt – Polizei Niedersachsen</h1>
-    <form id="streifenForm">
-      <label>Datum:</label>
+  <h1>Polizei Niedersachsen – Streifenblatt</h1>
+  <form id="streifenblatt-form">
+    <label>Datum:
       <input type="date" name="datum" required />
-      
-      <label>Dienstzeit:</label>
-      <input type="text" name="dienstzeit" placeholder="z. B. 06:00–14:00" required />
-      
-      <label>Funkstreifenwagen:</label>
-      <input type="text" name="fuStw" placeholder="z. B. FuStw 12-1" required />
-      
-      <label>Beamte:</label>
-      <input type="text" name="beamte" placeholder="z. B. PHM Meier / PK Schulz" required />
-      
-      <label>Ort:</label>
+    </label>
+    <label>Dienstzeit (z. B. 06:00–14:00):
+      <input type="text" name="dienstzeit" required />
+    </label>
+    <label>Funkstreifenwagen:
+      <input type="text" name="fuStw" placeholder="z. B. FuStw 21-11" />
+    </label>
+    <label>Beamte im Dienst:
+      <input type="text" name="beamte" placeholder="z. B. PHN Müller, PKA Becker" />
+    </label>
+    <label>Ort:
       <input type="text" name="ort" required />
-      
-      <label>Uhrzeit:</label>
-      <input type="time" name="uhrzeit" required />
-      
-      <label>Vorkommnisse:</label>
-      <div class="checkboxes">
-        <label><input type="checkbox" name="massnahmen" value="Personen-/Fahrzeugkontrolle" /> Personen-/Fahrzeugkontrolle</label>
-        <label><input type="checkbox" name="massnahmen" value="Ruhestörung" /> Ruhestörung</label>
-        <label><input type="checkbox" name="massnahmen" value="Verkehrsunfall" /> Verkehrsunfall</label>
-        <label><input type="checkbox" name="massnahmen" value="Ladendiebstahl" /> Ladendiebstahl</label>
-        <label><input type="checkbox" name="massnahmen" value="Sachbeschädigung" /> Sachbeschädigung</label>
-        <label><input type="checkbox" name="massnahmen" value="Hausfriedensbruch" /> Hausfriedensbruch</label>
-        <label><input type="checkbox" name="massnahmen" value="Drogendelikte" /> Drogendelikte</label>
-        <label><input type="checkbox" name="massnahmen" value="Verdächtige Person" /> Verdächtige Person</label>
-        <label><input type="checkbox" name="massnahmen" value="Widerstand gegen Vollstreckungsbeamte" /> Widerstand gegen Vollstreckungsbeamte</label>
-        <label><input type="checkbox" name="massnahmen" value="Platzverweis" /> Platzverweis</label>
-      </div>
-
-      <label>Beschreibung:</label>
-      <textarea name="beschreibung" rows="5" placeholder="Einsatzbeschreibung..." required></textarea>
-
-      <label>Weitere Schritte / Hinweise:</label>
-      <textarea name="weitere" rows="3"></textarea>
-
-      <button type="submit">Bericht erstellen und einreichen</button>
-    </form>
-  </div>
+    </label>
+    <label>Uhrzeit vor Ort:
+      <input type="time" name="uhrzeit" />
+    </label>
+    <label>Vorkommnisse:</label>
+    <div class="checkboxes">
+      <label><input type="checkbox" name="massnahmen" value="Personen-/Fahrzeugkontrolle" /> Personen-/Fahrzeugkontrolle</label>
+      <label><input type="checkbox" name="massnahmen" value="Ruhestörung" /> Ruhestörung</label>
+      <label><input type="checkbox" name="massnahmen" value="Verkehrsunfall" /> Verkehrsunfall</label>
+      <label><input type="checkbox" name="massnahmen" value="Ladendiebstahl" /> Ladendiebstahl</label>
+      <label><input type="checkbox" name="massnahmen" value="Sachbeschädigung" /> Sachbeschädigung</label>
+      <label><input type="checkbox" name="massnahmen" value="Drogendelikte" /> Drogendelikte</label>
+      <label><input type="checkbox" name="massnahmen" value="Widerstand gegen Vollstreckungsbeamte" /> Widerstand gegen Vollstreckungsbeamte</label>
+      <label><input type="checkbox" name="massnahmen" value="Diebstahl" /> Diebstahl</label>
+      <label><input type="checkbox" name="massnahmen" value="Officer Down" /> Officer Down</label>
+    </div>
+    <label>Beschreibung:
+      <textarea name="beschreibung" rows="5" required></textarea>
+    </label>
+    <label>Weitere Schritte:
+      <textarea name="weitereSchritte" rows="3"></textarea>
+    </label>
+    <button type="submit">📝 Bericht einreichen</button>
+  </form>
 
   <script>
-    document.getElementById("streifenForm").addEventListener("submit", async function(event) {
-      event.preventDefault();
+    document.getElementById('streifenblatt-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
 
-      const form = new FormData(event.target);
-      const massnahmen = [];
-      document.querySelectorAll("input[name='massnahmen']:checked").forEach(cb => massnahmen.push(cb.value));
+      const massnahmen = [...form.massnahmen]
+        .filter(chk => chk.checked)
+        .map(chk => chk.value);
 
-      const message = `**📋 Streifenbericht eingereicht**\n\n` +
-        `**📅 Datum:** ${form.get("datum")}\n` +
-        `**⏰ Dienstzeit:** ${form.get("dienstzeit")}\n` +
-        `**🚓 Funkstreifenwagen:** ${form.get("fuStw")}\n` +
-        `**👮 Beamte:** ${form.get("beamte")}\n` +
-        `**📍 Ort:** ${form.get("ort")} um ${form.get("uhrzeit")} Uhr\n` +
-        `**📑 Vorkommnisse:** ${massnahmen.join(", ")}\n\n` +
-        `**📝 Beschreibung:** ${form.get("beschreibung")}\n` +
-        `**🔄 Weitere Schritte:** ${form.get("weitere")}`;
+      const payload = {
+        content: `**📝 Streifenbericht eingereicht**\n\n` +
+          `**📅 Datum:** ${form.datum.value}\n` +
+          `**🕘 Dienstzeit:** ${form.dienstzeit.value}\n` +
+          `**🚓 Funkstreifenwagen:** ${form.fuStw.value}\n` +
+          `**👮‍♂️ Beamte:** ${form.beamte.value}\n` +
+          `**📍 Ort:** ${form.ort.value}\n` +
+          `**⏰ Uhrzeit:** ${form.uhrzeit.value}\n` +
+          `**📌 Vorkommnisse:** ${massnahmen.join(', ')}\n` +
+          `**🗒️ Beschreibung:** ${form.beschreibung.value}\n` +
+          `**➡️ Weitere Schritte:** ${form.weitereSchritte.value}`
+      };
 
       await fetch("https://discord.com/api/webhooks/1380961960748650536/N1HrBy_bBZXTWy5IdZ8kmAIlKwdHiaeDOfe3vL9NO6fGfmY3NpRXdHd8Nf0Vn4aKCTzT", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
-        body: JSON.stringify({ content: message })
+        body: JSON.stringify(payload)
       });
 
-      alert("✅ Bericht erfolgreich eingereicht!");
-      event.target.reset();
+      alert("✅ Streifenbericht erfolgreich gesendet!");
+      form.reset();
     });
   </script>
 </body>
 </html>
-
